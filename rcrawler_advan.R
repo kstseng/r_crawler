@@ -1,9 +1,12 @@
 library(rvest)
-
+#---
+# set url
+#---
 advan_url <- "http://www.directindustry.com/prod/advantech-4657.html" 
 advan <- read_html(advan_url, encoding="UTF-8") 
-# advan %>% iconv(from='UTF-8', to='UTF-8') 
 
+#---
+# Crawl by different id number and make data frame in a list
 #---
 id_list <- c(37722, 37724, 37725, 225117, 98993, 259394)
 RES <- list()
@@ -20,7 +23,10 @@ for (i in 1:length(id_list)) {
   RES[[i]] <- res_rm
 }
 
-
+#---
+# write multiple dataframe into a xlsx with multiple sheets
+# set ID name as xlsx sheet name
+#---
 ID_name <- c("Industrial Automation", "Embedded Boards & Design-in Services", "Digital Healthcare", "Intelligent Systems", 
              "Digital Logistics, iRetail & Hospitality", "Industrial Communication")
 library(xlsx)
@@ -28,10 +34,3 @@ write.xlsx(x = RES[[1]], file = "C:\\Users\\David79.Tseng\\Desktop\\AdvanCrawler
 for (j in 2:length(ID_name)) {
   write.xlsx(x = RES[[j]], file = "C:\\Users\\David79.Tseng\\Desktop\\AdvanCrawler.xlsx", sheetName = ID_name[j], col.names = TRUE, row.names = FALSE, append = T)  
 }
-
-
-
-
-
-
-
